@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Connect Pro</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root{
+--primary:#4f46e5;
+--secondary:#10b981;
+--bg:#f8fafc;
+--text:#1e293b;
+--muted:#64748b;
+}
+
+*{box-sizing:border-box;font-family:'Plus Jakarta Sans',sans-serif}
+
+body{
+margin:0;
+background:var(--bg);
+display:flex;
+}
+
+/* SIDEBAR */
+aside{
+width:280px;
+background:#fff;
+height:100vh;
+padding:25px;
+position:fixed;
+border-right:1px solid #e5e7eb;
+z-index:10;
+}
+
+.logo{
+font-size:1.4rem;
+font-weight:800;
+color:var(--primary);
+margin-bottom:30px;
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.nav-link{
+width:100%;
+padding:14px;
+margin-bottom:10px;
+border:none;
+border-radius:12px;
+background:none;
+cursor:pointer;
+display:flex;
+gap:12px;
+font-weight:600;
+color:var(--muted);
+transition:.3s;
+}
+
+.nav-link.active{
+background:var(--primary);
+color:white;
+}
+
+.nav-link:hover{
+background:#eef2ff;
+color:var(--text);
+}
+
+/* MAIN */
+main{
+margin-left:280px;
+padding:40px;
+width:100%;
+position:relative;
+z-index:2;
+}
+
+/* HOME VIDEO BACKGROUND */
+#homeVideoWrapper{
+position:fixed;
+top:0;
+left:280px;
+width:calc(100% - 280px);
+height:100vh;
+z-index:-1;
+overflow:hidden;
+}
+
+#homeVideoWrapper video{
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0.18;
+}
+
+#homeVideoOverlay{
+position:absolute;
+inset:0;
+background:linear-gradient(
+rgba(248,250,252,0.9),
+rgba(248,250,252,0.98)
+);
+}
+
+/* SECTIONS */
+section{
+display:none;
+animation:fadeIn .4s ease;
+}
+
+section.active{display:block}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:none}
+}
+
+/* CARDS */
+.card{
+background:#fff;
+padding:25px;
+border-radius:18px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+margin-bottom:25px;
+}
+
+.grid-3{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+margin-bottom:30px;
+}
+
+.stat{
+padding:25px;
+border-radius:20px;
+color:#fff;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+/* MARKET */
+#resourceList{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+gap:20px;
+}
+
+.product{
+background:#fff;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.product img{
+width:100%;
+height:160px;
+object-fit:cover;
+}
+
+.product div{padding:15px}
+
+.price{
+font-size:1.2rem;
+font-weight:700;
+color:var(--primary);
+}
+
+/* BUTTON */
+.btn{
+background:var(--primary);
+color:#fff;
+border:none;
+padding:12px 18px;
+border-radius:10px;
+font-weight:700;
+cursor:pointer;
+}
+
+input,textarea{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #e5e7eb;
+margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<aside>
+<div class="logo"><i class="fas fa-bolt"></i>CampusConnect</div>
+
+<button class="nav-link active" onclick="showSection('home',this)">Home</button>
+<button class="nav-link" onclick="showSection('market',this)">Marketplace</button>
+<button class="nav-link" onclick="showSection('peer',this)">Doubts</button>
+<button class="nav-link" onclick="showSection('career',this)">Careers</button>
+</aside>
+
+<main>
+
+<!-- HOME BACKGROUND VIDEO -->
+<div id="homeVideoWrapper">
+<video id="bgVideo" autoplay muted loop playsinline>
+<source src="https://ik.imagekit.io/oq9dfnayf/Campus_Connect_Project_Video_Generation.mp4" type="video/mp4">
+</video>
+<div id="homeVideoOverlay"></div>
+</div>
+
+<section id="home" class="active">
+<h1>Welcome back, Batch 13 👋</h1>
+
+<div class="grid-3">
+<div class="stat" style="background:linear-gradient(135deg,#6366f1,#4f46e5)">
+<div><small>Listings</small><h2 id="resCount">3</h2></div>
+</div>
+
+<div class="stat" style="background:linear-gradient(135deg,#10b981,#059669)">
+<div><small>Doubts</small><h2>12</h2></div>
+</div>
+
+<div class="stat" style="background:linear-gradient(135deg,#f59e0b,#d97706)">
+<div><small>Credits</small><h2>2450</h2></div>
+</div>
+</div>
+
+<div class="card">
+<h3>Campus Notice</h3>
+<p>React Native Workshop – Seminar Hall B</p>
+</div>
+</section>
+
+<section id="market">
+<h2>Marketplace</h2>
+<div id="resourceList"></div>
+</section>
+
+<section id="peer">
+<h2>Doubt Forum</h2>
+<div class="card">
+<textarea id="doubtIn" placeholder="Ask your doubt..."></textarea>
+<button class="btn" onclick="addDoubt()">Post</button>
+</div>
+<div id="doubtList"></div>
+</section>
+
+<section id="career">
+<h2>Career Roadmap</h2>
+<button class="btn" onclick="roadmap('web')">Web Dev</button>
+<button class="btn" onclick="roadmap('sde')">SDE</button>
+<div id="roadmapBox" class="card"></div>
+</section>
+
+</main>
+
+<script>
+let items=[
+{name:"Design Patterns",price:"₹600",img:"https://images.unsplash.com/photo-1532012197267-da84d127e765"},
+{name:"iPad Pencil",price:"₹7500",img:"https://images.unsplash.com/photo-1585338107529-13afc5f02586"},
+{name:"Lab Coat",price:"Free",img:"https://images.unsplash.com/photo-1581093588401-fbb62a02f120"}
+];
+
+let doubts=[];
+
+/* Enable sound after user interaction */
+document.body.addEventListener("click",()=>{
+const v=document.getElementById("bgVideo");
+v.muted=false;
+},{once:true});
+
+function showSection(id,btn){
+document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+
+document.querySelectorAll(".nav-link").forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+
+document.getElementById("homeVideoWrapper").style.display =
+(id==="home") ? "block" : "none";
+}
+
+function renderItems(){
+resourceList.innerHTML=items.map(i=>`
+<div class="product">
+<img src="${i.img}">
+<div><b>${i.name}</b><div class="price">${i.price}</div></div>
+</div>
+`).join("");
+resCount.innerText=items.length;
+}
+
+function addDoubt(){
+if(!doubtIn.value)return;
+doubts.unshift(doubtIn.value);
+doubtList.innerHTML=doubts.map(d=>`<div class="card">${d}</div>`).join("");
+doubtIn.value="";
+}
+
+function roadmap(type){
+let data={
+web:["HTML","CSS","JavaScript","React","Backend"],
+sde:["DSA","OS","DBMS","System Design","Interviews"]
+};
+roadmapBox.innerHTML=data[type].map((s,i)=>`
+<div><b>Step ${i+1}:</b> ${s}</div>
+`).join("");
+}
+
+renderItems();
+</script>
+
+</body>
+</html>
